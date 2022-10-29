@@ -40,7 +40,7 @@ func (imageProcessingAdapter *ImageProcessingAdapter) MakeThumbnail() (string, e
 	return writePath, nil
 }
 
-func (imageProcessingAdapter *ImageProcessingAdapter) Resize() (string, error) {
+func (imageProcessingAdapter *ImageProcessingAdapter) Resize(height int, width int) (string, error) {
 	readPath := path.Join("../downloads", imageProcessingAdapter.fileName)
 
 	buffer, err := bimg.Read(readPath)
@@ -49,8 +49,8 @@ func (imageProcessingAdapter *ImageProcessingAdapter) Resize() (string, error) {
 	}
 
 	// Fallback to default to error out
-	resizeHeight := imageProcessingAdapter.height
-	resizeWidth := imageProcessingAdapter.width
+	resizeHeight := height
+	resizeWidth := width
 
 	thumbnailImage, err := bimg.NewImage(buffer).Resize(resizeHeight, resizeWidth)
 	if err != nil {
@@ -82,6 +82,36 @@ func (imageProcessingAdapter *ImageProcessingAdapter) GrayScale() (string, error
 	return writePath, nil
 }
 
-// func (imageProcessingAdapter *ImageProcessingAdapter) ConvertImageFormat() (string, error) {
+func (imageProcessingAdapter *ImageProcessingAdapter) ConvertImageFormat(format string) (string, error) {
+	readPath := path.Join("../downloads", imageProcessingAdapter.fileName)
 
-// }
+	buffer, err := bimg.Read(readPath)
+	if err != nil {
+		return "", errors.New("unable to read image")
+	}
+
+	switch format {
+	case "PNG":
+		newImage, err := bimg.NewImage(buffer).Convert(bimg.PNG)
+		if err != nil {
+			return "", errors.New("unable to read image")
+		}
+
+		writePath := path.Join("../downloads", imageProcessingAdapter.fileName)
+		bimg.Write(writePath, newImage)
+
+		return writePath, nil
+	case "JPEG":
+		newImage, err := bimg.NewImage(buffer).Convert(bimg.JPEG)
+		if err != nil {
+			return "", errors.New("unable to read image")
+		}
+
+		writePath := path.Join("../downloads", imageProcessingAdapter.fileName)
+		bimg.Write(writePath, newImage)
+
+		return writePath, nil
+	default:
+		return "", errors.New("conversion format unsupported")
+	}
+}

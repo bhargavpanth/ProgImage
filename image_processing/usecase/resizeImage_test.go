@@ -14,8 +14,9 @@ func TestResizeImage(t *testing.T) {
 	}
 
 	img := "img.jpg"
+	resizeHeight, resizeWidth := 200, 200
 
-	path, err := ResizeImage(dependencies)(img, 200, 200)
+	path, err := ResizeImage(dependencies)(img, resizeHeight, resizeWidth)
 
 	if err != nil {
 		t.Errorf("ResizeImage use case failed to read")
@@ -31,8 +32,8 @@ func TestResizeImage(t *testing.T) {
 		t.Errorf("ResizeImage use case failed to read after conversion")
 	}
 
-	if convertedImage.Width != 200 || convertedImage.Height != 200 {
-		t.Errorf("Invalid image size: %dx%d expected %dx%d", convertedImage.Width, convertedImage.Height, 100, 100)
+	if convertedImage.Width != resizeWidth || convertedImage.Height != resizeHeight {
+		t.Errorf("Invalid image size: %dx%d expected %dx%d", convertedImage.Width, convertedImage.Height, resizeHeight, resizeWidth)
 	}
 }
 
