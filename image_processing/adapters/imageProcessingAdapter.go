@@ -48,17 +48,14 @@ func (imageProcessingAdapter *ImageProcessingAdapter) Resize(height int, width i
 		return "", errors.New("unable to read image")
 	}
 
-	// Fallback to default to error out
-	resizeHeight := height
-	resizeWidth := width
-
-	thumbnailImage, err := bimg.NewImage(buffer).Resize(resizeHeight, resizeWidth)
+	// Note: Fallback or check validity
+	resizedImage, err := bimg.NewImage(buffer).Resize(height, width)
 	if err != nil {
 		return "", errors.New("unable to resize image")
 	}
 
 	writePath := path.Join("../downloads", imageProcessingAdapter.fileName)
-	bimg.Write(writePath, thumbnailImage)
+	bimg.Write(writePath, resizedImage)
 
 	return writePath, nil
 }
