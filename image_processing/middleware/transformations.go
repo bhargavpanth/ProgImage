@@ -3,7 +3,6 @@ package middleware
 import (
 	"encoding/json"
 	"net/http"
-	"strings"
 
 	adapters "image_processing/adapters"
 	usecase "image_processing/usecase"
@@ -16,7 +15,7 @@ type InvalidRequest struct {
 }
 
 type ValidReponse struct {
-	Path string `json:"path"`
+	FileId string `json:"fileId"`
 }
 
 type InternalServerError struct {
@@ -24,32 +23,18 @@ type InternalServerError struct {
 }
 
 func FileTransform(w http.ResponseWriter, r *http.Request) {
-	transformOptions := r.URL.Query().Get("options")
 	imageId := mux.Vars(r)["image_id"]
+	transformOptions := r.URL.Query()["option"]
+	formatConversionOptions := r.URL.Query()["format"]
 
 	dependencies := usecase.Dependencies{
 		FileProcessor:  adapters.FileProcessorAdapter{},
 		ImageProcessor: adapters.ImageProcessingAdapter{},
 	}
 
-	downloadPath, err := usecase.DownloadFile(dependencies)(imageId)
-	if err != nil {
-		w.Header().Set("Content-Type", "application/json")
-		response := InternalServerError{
-			Message: "Unable to process request",
-		}
-		w.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(w).Encode(response)
-	}
-
-	for _, s := range strings.Split(transformOptions, ",") {
-		switch s {
-		case "thumbnail":
-			usecase.ConvertImageToThumbnail(dependencies)(downloadPath)
-		}
-	}
-
-	uploadedFileId, err := usecase.UploadFile(dependencies)(downloadPath)
+	fileId, err := usecase.FileTransform(dependencies)(
+		imageId, transformOptions, formatConversionOptions,
+	)
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json")
 		response := InternalServerError{
@@ -61,7 +46,7 @@ func FileTransform(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	response := ValidReponse{
-		Path: uploadedFileId,
+		FileId: fileId,
 	}
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(response)

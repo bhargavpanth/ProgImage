@@ -23,3 +23,7 @@ func (fileProcessorAdapter *FileProcessorAdapter) UploadFile() (string, error) {
 	*/
 	return "", nil
 }
+
+func (fileProcessorAdapter *FileProcessorAdapter) PurgeDownloadedFile(downloadPath string) bool {
+	return true
+}
