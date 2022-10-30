@@ -14,14 +14,14 @@ func (fileProcessorAdapter *FileProcessorAdapter) DownloadFile() (string, error)
 	/*
 		AWS/Azure/GCP specifics to be added here
 	*/
-	return "", nil
+	return "img.jpg", nil
 }
 
 func (fileProcessorAdapter *FileProcessorAdapter) UploadFile() (string, error) {
 	/*
 		AWS/Azure/GCP specifics to be added here
 	*/
-	return "", nil
+	return "fileID", nil
 }
 
 func (fileProcessorAdapter *FileProcessorAdapter) PurgeDownloadedFile(downloadPath string) bool {

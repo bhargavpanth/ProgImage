@@ -24,7 +24,7 @@ type InternalServerError struct {
 
 func FileTransform(w http.ResponseWriter, r *http.Request) {
 	imageId := mux.Vars(r)["image_id"]
-	transformOptions := r.URL.Query()["option"]
+	transformOptions := r.URL.Query()["options"]
 	formatConversionOptions := r.URL.Query()["format"]
 
 	dependencies := usecase.Dependencies{
@@ -38,7 +38,7 @@ func FileTransform(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json")
 		response := InternalServerError{
-			Message: "Unable to process request",
+			Message: "unable to process request",
 		}
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(response)
