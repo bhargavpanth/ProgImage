@@ -2,14 +2,12 @@ package usecase
 
 import (
 	adapters "image_processing/adapters"
-	"os"
 	"testing"
 
 	"github.com/h2non/bimg"
 )
 
 func TestGrayScaleImage(t *testing.T) {
-	os.Setenv("DOWNLOADS", "../downloads")
 	dependencies := Dependencies{
 		FileProcessor:  adapters.FileProcessorAdapter{},
 		ImageProcessor: adapters.ImageProcessingAdapter{},
@@ -34,7 +32,6 @@ func TestGrayScaleImage(t *testing.T) {
 }
 
 func TestGrayScaleImageWithWrongPath(t *testing.T) {
-	os.Setenv("DOWNLOADS", "../downloads")
 	dependencies := Dependencies{
 		FileProcessor:  adapters.FileProcessorAdapter{},
 		ImageProcessor: adapters.ImageProcessingAdapter{},

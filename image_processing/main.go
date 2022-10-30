@@ -6,11 +6,13 @@ import (
 	"image_processing/middleware"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gorilla/mux"
 )
 
+// http://localhost:4000/transform/img1234?options=thumbnail&options=grayscale&format={PNG,JPEG}
 func main() {
 	router := mux.NewRouter()
 
@@ -21,6 +23,8 @@ func main() {
 	// PORT := os.Getenv("PORT")
 	// IP := os.Getenv("IP")
 	// IP + ":" + PORT
+
+	os.Setenv("DOWNLOADS", "./downloads")
 
 	srv := &http.Server{
 		Handler:      router,

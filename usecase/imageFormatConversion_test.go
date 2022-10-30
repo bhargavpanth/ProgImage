@@ -2,14 +2,12 @@ package usecase
 
 import (
 	adapters "image_processing/adapters"
-	"os"
 	"testing"
 
 	"github.com/h2non/bimg"
 )
 
 func TestConvertImageFormatToPNG(t *testing.T) {
-	os.Setenv("DOWNLOADS", "../downloads")
 	dependencies := Dependencies{
 		FileProcessor:  adapters.FileProcessorAdapter{},
 		ImageProcessor: adapters.ImageProcessingAdapter{},
@@ -33,7 +31,6 @@ func TestConvertImageFormatToPNG(t *testing.T) {
 }
 
 func TestConvertImageFormatToJPEG(t *testing.T) {
-	os.Setenv("DOWNLOADS", "../downloads")
 	dependencies := Dependencies{
 		FileProcessor:  adapters.FileProcessorAdapter{},
 		ImageProcessor: adapters.ImageProcessingAdapter{},
@@ -57,7 +54,6 @@ func TestConvertImageFormatToJPEG(t *testing.T) {
 }
 
 func TestConvertImageFormatToAnUnsuportedFileFormat(t *testing.T) {
-	os.Setenv("DOWNLOADS", "../downloads")
 	dependencies := Dependencies{
 		FileProcessor:  adapters.FileProcessorAdapter{},
 		ImageProcessor: adapters.ImageProcessingAdapter{},
@@ -72,7 +68,6 @@ func TestConvertImageFormatToAnUnsuportedFileFormat(t *testing.T) {
 }
 
 func TestConvertImageFormatWithWrongPath(t *testing.T) {
-	os.Setenv("DOWNLOADS", "../downloads")
 	dependencies := Dependencies{
 		FileProcessor:  adapters.FileProcessorAdapter{},
 		ImageProcessor: adapters.ImageProcessingAdapter{},

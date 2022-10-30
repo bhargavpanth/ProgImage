@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	adapters "image_processing/adapters"
-	usecase "image_processing/usecase"
+	"image_processing/usecase"
 
 	"github.com/gorilla/mux"
 )

@@ -2,6 +2,7 @@ package adapters
 
 import (
 	"errors"
+	"os"
 	"path"
 
 	"github.com/h2non/bimg"
@@ -22,7 +23,8 @@ func (imageProcessingAdapter *ImageProcessingAdapter) NewImageProcessor(fileName
 }
 
 func (imageProcessingAdapter *ImageProcessingAdapter) MakeThumbnail() (string, error) {
-	readPath := path.Join("../downloads", imageProcessingAdapter.fileName)
+	realtivePath := os.Getenv("DOWNLOADS")
+	readPath := path.Join(realtivePath, imageProcessingAdapter.fileName)
 
 	buffer, err := bimg.Read(readPath)
 	if err != nil {
@@ -34,14 +36,15 @@ func (imageProcessingAdapter *ImageProcessingAdapter) MakeThumbnail() (string, e
 		return "", errors.New("unable to make thumbnail from image")
 	}
 
-	writePath := path.Join("../downloads", imageProcessingAdapter.fileName)
+	writePath := path.Join(realtivePath, imageProcessingAdapter.fileName)
 	bimg.Write(writePath, thumbnailImage)
 
 	return writePath, nil
 }
 
 func (imageProcessingAdapter *ImageProcessingAdapter) Resize(height int, width int) (string, error) {
-	readPath := path.Join("../downloads", imageProcessingAdapter.fileName)
+	realtivePath := os.Getenv("DOWNLOADS")
+	readPath := path.Join(realtivePath, imageProcessingAdapter.fileName)
 
 	buffer, err := bimg.Read(readPath)
 	if err != nil {
@@ -54,14 +57,15 @@ func (imageProcessingAdapter *ImageProcessingAdapter) Resize(height int, width i
 		return "", errors.New("unable to resize image")
 	}
 
-	writePath := path.Join("../downloads", imageProcessingAdapter.fileName)
+	writePath := path.Join(realtivePath, imageProcessingAdapter.fileName)
 	bimg.Write(writePath, resizedImage)
 
 	return writePath, nil
 }
 
 func (imageProcessingAdapter *ImageProcessingAdapter) GrayScale() (string, error) {
-	readPath := path.Join("../downloads", imageProcessingAdapter.fileName)
+	realtivePath := os.Getenv("DOWNLOADS")
+	readPath := path.Join(realtivePath, imageProcessingAdapter.fileName)
 
 	buffer, err := bimg.Read(readPath)
 	if err != nil {
@@ -73,14 +77,15 @@ func (imageProcessingAdapter *ImageProcessingAdapter) GrayScale() (string, error
 		return "", errors.New("unable to convert image to grayscale")
 	}
 
-	writePath := path.Join("../downloads", imageProcessingAdapter.fileName)
+	writePath := path.Join(realtivePath, imageProcessingAdapter.fileName)
 	bimg.Write(writePath, grayscaleImage)
 
 	return writePath, nil
 }
 
 func (imageProcessingAdapter *ImageProcessingAdapter) ConvertImageFormat(format string) (string, error) {
-	readPath := path.Join("../downloads", imageProcessingAdapter.fileName)
+	realtivePath := os.Getenv("DOWNLOADS")
+	readPath := path.Join(realtivePath, imageProcessingAdapter.fileName)
 
 	buffer, err := bimg.Read(readPath)
 	if err != nil {
@@ -94,7 +99,7 @@ func (imageProcessingAdapter *ImageProcessingAdapter) ConvertImageFormat(format 
 			return "", errors.New("unable to read image")
 		}
 
-		writePath := path.Join("../downloads", imageProcessingAdapter.fileName)
+		writePath := path.Join(realtivePath, imageProcessingAdapter.fileName)
 		bimg.Write(writePath, newImage)
 
 		return writePath, nil
@@ -104,7 +109,7 @@ func (imageProcessingAdapter *ImageProcessingAdapter) ConvertImageFormat(format 
 			return "", errors.New("unable to read image")
 		}
 
-		writePath := path.Join("../downloads", imageProcessingAdapter.fileName)
+		writePath := path.Join(realtivePath, imageProcessingAdapter.fileName)
 		bimg.Write(writePath, newImage)
 
 		return writePath, nil

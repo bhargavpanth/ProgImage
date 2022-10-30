@@ -2,14 +2,12 @@ package usecase
 
 import (
 	adapters "image_processing/adapters"
-	"os"
 	"testing"
 
 	"github.com/h2non/bimg"
 )
 
 func TestThumbnailImage(t *testing.T) {
-	os.Setenv("DOWNLOADS", "../downloads")
 	dependencies := Dependencies{
 		FileProcessor:  adapters.FileProcessorAdapter{},
 		ImageProcessor: adapters.ImageProcessingAdapter{},
@@ -38,7 +36,6 @@ func TestThumbnailImage(t *testing.T) {
 }
 
 func TestThumbnailImageWithWrongPath(t *testing.T) {
-	os.Setenv("DOWNLOADS", "../downloads")
 	dependencies := Dependencies{
 		FileProcessor:  adapters.FileProcessorAdapter{},
 		ImageProcessor: adapters.ImageProcessingAdapter{},
