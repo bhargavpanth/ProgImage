@@ -3,7 +3,6 @@ import { BaseDomainModel } from '../domainEntity'
 export interface ProgImageModel extends BaseDomainModel {
 	fileSHA: string
     path: string
-    bucket: string
     fileName: string
     mimeType: MimeType
     verified: boolean

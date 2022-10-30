@@ -19,7 +19,13 @@ const factory = (dependencies: Dependencies) => async (fileSHA: string, fileName
     if (existingFileEntry && existingFileEntry.getVerificationStatus()) 
         throw new Error('Trying to re-upload an existing file')
 
-    return contentProviderAdapter.generatePreSignedURLForUpload(fileName)
+    const presignedURL = await contentProviderAdapter.generatePreSignedURLForUpload(fileName)
+
+    await progImageGateway.createNewFile(fileSHA, fileName).catch(err => {
+        throw new Error('Unable to register file')
+    })
+
+    return presignedURL
 }
 
 export default factory
