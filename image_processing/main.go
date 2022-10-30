@@ -1,8 +1,6 @@
 package main
 
 import (
-	// "os"
-	// "encoding/json"
 	"image_processing/middleware"
 	"log"
 	"net/http"
