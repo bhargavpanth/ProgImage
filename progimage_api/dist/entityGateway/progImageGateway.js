@@ -1,19 +1,39 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// class PersistantProgImage extends ProgImage {
-//     public updateVerified(): Promise<void> {
-//         return Promise.resolve()
-//     }
-// }
+const progImage_1 = require("../entity/progImage");
+const model_1 = require("../entity/progImage/model");
+class PersistantProgImage extends progImage_1.ProgImage {
+    updateVerified() {
+        return Promise.resolve();
+    }
+}
 const gateway = {
     createEntry: function (model) {
-        throw new Error('Not implemented');
+        return Promise.resolve(new PersistantProgImage(model));
     },
     getEntry: function (fileSHA) {
-        throw new Error('Not implemented');
+        const model = {
+            fileSHA: '',
+            path: '',
+            fileName: '',
+            mimeType: model_1.MimeType.jpeg,
+            verified: false,
+            id: '',
+            createdAt: new Date()
+        };
+        return Promise.resolve(new PersistantProgImage(model));
     },
     createNewFile: function (fileSHA, fileName) {
-        throw new Error('Not implemented');
+        const model = {
+            fileSHA: '',
+            path: '',
+            fileName: '',
+            mimeType: model_1.MimeType.jpeg,
+            verified: false,
+            id: '',
+            createdAt: new Date()
+        };
+        return Promise.resolve(new PersistantProgImage(model));
     }
 };
 exports.default = gateway;
