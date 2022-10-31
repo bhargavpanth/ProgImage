@@ -7,13 +7,15 @@ class PersistantProgImage extends progImage_1.ProgImage {
         return Promise.resolve();
     }
 }
+// const TABLE_NAME = 'ProgImage'
 const gateway = {
-    createEntry: function (model) {
+    createEntry: async (model) => {
+        // const res = await DynamoDBClient(TABLE_NAME).create(model)
         return Promise.resolve(new PersistantProgImage(model));
     },
-    getEntry: function (fileSHA) {
+    getEntry: async (fileSHA) => {
         const model = {
-            fileSHA: '',
+            fileSHA: fileSHA,
             path: '',
             fileName: '',
             mimeType: model_1.MimeType.jpeg,
@@ -23,11 +25,11 @@ const gateway = {
         };
         return Promise.resolve(new PersistantProgImage(model));
     },
-    createNewFile: function (fileSHA, fileName) {
+    createNewFile: async (fileSHA, fileName) => {
         const model = {
-            fileSHA: '',
+            fileSHA: fileSHA,
             path: '',
-            fileName: '',
+            fileName: fileName,
             mimeType: model_1.MimeType.jpeg,
             verified: false,
             id: '',

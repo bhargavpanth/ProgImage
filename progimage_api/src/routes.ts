@@ -1,17 +1,28 @@
 import express from 'express'
 import { authenticate } from './middleware/authentication'
 import { authorize } from './middleware/authorization'
+import { download } from './middleware/download'
+import { upload } from './middleware/upload'
+import { process } from './middleware/process'
 
 const router = express.Router()
 
-router.post('/upload',
+router.get('/upload/:file_SHA/name/:file_name',
 	authenticate,
-	authorize
+	authorize,
+	upload
 )
 
-router.get('/customer/:customerId/slow',
+router.get('/download/:file_SHA',
 	authenticate,
-	authorize
+	authorize,
+	download
+)
+
+router.get('/process/:file_SHA',
+	authenticate,
+	authorize,
+	process
 )
 
 export default router

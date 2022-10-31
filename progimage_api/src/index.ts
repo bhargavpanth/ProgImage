@@ -2,7 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import api from './routes'
 
-const port = parseInt(process.env.PORT) || 4000
+const port = parseInt(process.env.PORT) || 8080
 
 const app = express()
 

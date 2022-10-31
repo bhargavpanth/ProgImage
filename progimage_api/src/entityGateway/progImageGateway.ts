@@ -1,5 +1,6 @@
 import { ProgImage } from '../entity/progImage'
 import { MimeType, ProgImageModel } from '../entity/progImage/model'
+// import { DynamoDBClient } from './dynamoDBClient'
 import ProgImageGateway from './interfaces/progImageGateway'
 
 class PersistantProgImage extends ProgImage {
@@ -8,12 +9,15 @@ class PersistantProgImage extends ProgImage {
     }
 }
 
+// const TABLE_NAME = 'ProgImage'
+
 const gateway: ProgImageGateway = {
-    createEntry: function (model: ProgImageModel): Promise<ProgImage> {
+    createEntry: async (model: ProgImageModel): Promise<ProgImage> => {
+        // const res = await DynamoDBClient(TABLE_NAME).create(model)
         return Promise.resolve(new PersistantProgImage(model))
     },
 
-    getEntry: function (fileSHA: string): Promise<ProgImage> {
+    getEntry: async (fileSHA: string): Promise<ProgImage> => {
         const model: ProgImageModel = {
             fileSHA: fileSHA,
             path: '',
@@ -26,11 +30,11 @@ const gateway: ProgImageGateway = {
         return Promise.resolve(new PersistantProgImage(model))
     },
     
-    createNewFile: function (fileSHA: string, fileName: string): Promise<ProgImage> {
+    createNewFile: async (fileSHA: string, fileName: string): Promise<ProgImage> => {
         const model: ProgImageModel = {
-            fileSHA: '',
+            fileSHA: fileSHA,
             path: '',
-            fileName: '',
+            fileName: fileName,
             mimeType: MimeType.jpeg,
             verified: false,
             id: '',
