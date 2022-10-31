@@ -20,9 +20,9 @@ export function process(req, res, next) {
 
     return useCase.requestFileProcessing(fileSHA, processOptions, formatOptions)
         .then(preSignedURL => 
-            res.sendStatus(200).send({ url: preSignedURL })
+            res.send({ url: preSignedURL })
         )
         .catch(err => 
-            res.sendStatus(500).send({ message: `Something went wrong. ${err}` })
+            res.send({ message: `Something went wrong. ${err}` })
         )
 }

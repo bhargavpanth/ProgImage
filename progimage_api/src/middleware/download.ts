@@ -16,9 +16,9 @@ export function download (req, res, next) {
 
     return useCase.requestFileDownload(fileSHA)
         .then(preSignedURL => 
-            res.sendStatus(200).send({ url: preSignedURL })
+            res.send({ url: preSignedURL })
         )
         .catch(err => 
-            res.sendStatus(500).send({ message: `Something went wrong. ${err}` })
+            res.send({ message: `Something went wrong. ${err}` })
         )
 }

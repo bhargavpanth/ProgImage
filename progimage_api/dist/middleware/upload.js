@@ -20,6 +20,8 @@ function upload(req, res, next) {
     });
     return useCase.requestFileUpload(fileSHA, fileName)
         .then(preSignedURL => res.sendStatus(200).send({ url: preSignedURL }))
-        .catch(err => res.sendStatus(500).send({ message: `Something went wrong. ${err}` }));
+        .catch(err => res.sendStatus(500)
+    // console.log(`Something went wrong. ${err}`)
+    );
 }
 exports.upload = upload;

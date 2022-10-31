@@ -12,7 +12,6 @@ const factory = (dependencies: Dependencies) => async (fileSHA: string, fileName
         progImageGateway,
         contentProviderAdapter,
     } = dependencies
-    
     const existingFileEntry = await progImageGateway.getEntry(fileSHA)
     if (existingFileEntry || existingFileEntry?.getVerificationStatus()) 
         throw new Error('Trying to re-upload an existing file')
