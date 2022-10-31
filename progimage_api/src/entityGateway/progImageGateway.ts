@@ -1,16 +1,25 @@
 import { ProgImage } from '../entity/progImage'
-import { MimeType } from '../entity/progImage/model'
+import { ProgImageModel } from '../entity/progImage/model'
 import ProgImageGateway from './interfaces/progImageGateway'
 
+// class PersistantProgImage extends ProgImage {
+//     public updateVerified(): Promise<void> {
+//         return Promise.resolve()
+//     }
+// }
+
+
 const gateway: ProgImageGateway = {
-    createEntry: function (model: { fileSHA: string; path: string; bucket: string; fileName: string; mimeType: MimeType; verified: boolean; }): Promise<ProgImage> {
-        throw new Error('Function not implemented.')
+    createEntry: function (model: ProgImageModel): Promise<ProgImage> {
+        throw new Error('Not implemented')
     },
+
     getEntry: function (fileSHA: string): Promise<ProgImage> {
-        throw new Error('Function not implemented.');
+        throw new Error('Not implemented')
     },
+    
     createNewFile: function (fileSHA: string, fileName: string): Promise<ProgImage> {
-        throw new Error('Function not implemented.');
+        throw new Error('Not implemented')
     }
 }
 

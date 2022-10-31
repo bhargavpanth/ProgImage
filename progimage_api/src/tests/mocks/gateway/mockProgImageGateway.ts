@@ -13,7 +13,7 @@ const defaultModel: ProgImageModel = {
     createdAt: undefined
 }
 
-export class MockProgImage extends ProgImage {
+export class MockPersistantProgImage extends ProgImage {
     constructor(overrides?: Partial<ProgImageModel>) {
         super({ ...defaultModel, createdAt: new Date(), ...overrides })
     }
@@ -22,15 +22,16 @@ export class MockProgImage extends ProgImage {
     }
 }
 
+
 const defaultMock: ProgImageGateway = {
-    createEntry: async () => {
-        throw new Error('Function not implemented.')
+    createEntry: async (): Promise<ProgImage | null> => {
+        return new MockPersistantProgImage()
     },
-    getEntry: async (fileSHA: string) => {
-        throw new Error('Function not implemented.')
+    getEntry: async (fileSHA: string): Promise<ProgImage | null> => {
+        return new MockPersistantProgImage()
     },
-    createNewFile: async (fileSHA: string, fileName: string) => {
-        throw new Error('Function not implemented.')
+    createNewFile: async (fileSHA: string, fileName: string): Promise<ProgImage | null> => {
+        return new MockPersistantProgImage()
     }
 }
 

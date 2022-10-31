@@ -9,7 +9,7 @@ interface Dependencies {
     contentProviderAdapter: ContentProviderAdapter
 }
 
-const factory = (dependencies: Dependencies) => async (fileSHA: string, processOptions: Array<ProcessOptions>, formatOption: FormatOption) => {
+const factory = (dependencies: Dependencies) => async (fileSHA: string, processOptions?: Array<ProcessOptions>, formatOption?: FormatOption) => {
     const {
         progImageGateway,
         contentProviderAdapter,

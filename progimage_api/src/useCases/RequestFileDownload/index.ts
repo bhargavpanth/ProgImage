@@ -14,7 +14,7 @@ const factory = (dependencies: Dependencies) => async (fileSHA) => {
     } = dependencies
     
     const existingFileEntry = await progImageGateway.getEntry(fileSHA)
-    if (!existingFileEntry || !existingFileEntry.getVerificationStatus()) 
+    if (!existingFileEntry) 
         throw new Error('Trying to download a file that doesnt exist')
     
     const fileName = existingFileEntry.model.fileName

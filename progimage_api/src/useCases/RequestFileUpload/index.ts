@@ -1,10 +1,8 @@
 
 import { ContentProviderAdapter } from '../../adapters/interfaces/contentProviderAdapter'
-import { ImageProcessingAdapter } from '../../adapters/interfaces/imageProcessingAdapter'
 import ProgImageGateway from '../../entityGateway/interfaces/progImageGateway'
 
 interface Dependencies {
-    imageProcessorAdapter: ImageProcessingAdapter
     progImageGateway: ProgImageGateway
     contentProviderAdapter: ContentProviderAdapter
 }
@@ -16,7 +14,7 @@ const factory = (dependencies: Dependencies) => async (fileSHA: string, fileName
     } = dependencies
     
     const existingFileEntry = await progImageGateway.getEntry(fileSHA)
-    if (existingFileEntry && existingFileEntry.getVerificationStatus()) 
+    if (existingFileEntry || existingFileEntry?.getVerificationStatus()) 
         throw new Error('Trying to re-upload an existing file')
 
     const presignedURL = await contentProviderAdapter.generatePreSignedURLForUpload(fileName)
