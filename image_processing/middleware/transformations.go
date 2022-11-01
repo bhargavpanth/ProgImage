@@ -35,6 +35,7 @@ func FileTransform(w http.ResponseWriter, r *http.Request) {
 	fileId, err := usecase.FileTransform(dependencies)(
 		imageId, transformOptions, formatConversionOptions,
 	)
+	println(err.Error())
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json")
 		response := InternalServerError{
@@ -42,6 +43,7 @@ func FileTransform(w http.ResponseWriter, r *http.Request) {
 		}
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(response)
+		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")

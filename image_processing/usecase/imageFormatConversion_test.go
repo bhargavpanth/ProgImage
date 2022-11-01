@@ -10,6 +10,8 @@ import (
 
 func TestConvertImageFormatToPNG(t *testing.T) {
 	os.Setenv("DOWNLOADS", "../downloads")
+	os.Setenv("AWS_DEFAULT_REGION", "us-east-1")
+	os.Setenv("AWS_DEFAULT_BUCKET", "default_bucket")
 	dependencies := Dependencies{
 		FileProcessor:  adapters.FileProcessorAdapter{},
 		ImageProcessor: adapters.ImageProcessingAdapter{},
@@ -34,6 +36,8 @@ func TestConvertImageFormatToPNG(t *testing.T) {
 
 func TestConvertImageFormatToJPEG(t *testing.T) {
 	os.Setenv("DOWNLOADS", "../downloads")
+	os.Setenv("AWS_DEFAULT_REGION", "us-east-1")
+	os.Setenv("AWS_DEFAULT_BUCKET", "default_bucket")
 	dependencies := Dependencies{
 		FileProcessor:  adapters.FileProcessorAdapter{},
 		ImageProcessor: adapters.ImageProcessingAdapter{},
@@ -58,6 +62,8 @@ func TestConvertImageFormatToJPEG(t *testing.T) {
 
 func TestConvertImageFormatToAnUnsuportedFileFormat(t *testing.T) {
 	os.Setenv("DOWNLOADS", "../downloads")
+	os.Setenv("AWS_DEFAULT_REGION", "us-east-1")
+	os.Setenv("AWS_DEFAULT_BUCKET", "default_bucket")
 	dependencies := Dependencies{
 		FileProcessor:  adapters.FileProcessorAdapter{},
 		ImageProcessor: adapters.ImageProcessingAdapter{},
@@ -73,6 +79,8 @@ func TestConvertImageFormatToAnUnsuportedFileFormat(t *testing.T) {
 
 func TestConvertImageFormatWithWrongPath(t *testing.T) {
 	os.Setenv("DOWNLOADS", "../downloads")
+	os.Setenv("AWS_DEFAULT_REGION", "us-east-1")
+	os.Setenv("AWS_DEFAULT_BUCKET", "default_bucket")
 	dependencies := Dependencies{
 		FileProcessor:  adapters.FileProcessorAdapter{},
 		ImageProcessor: adapters.ImageProcessingAdapter{},

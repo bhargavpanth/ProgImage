@@ -23,6 +23,8 @@ func main() {
 	// IP + ":" + PORT
 
 	os.Setenv("DOWNLOADS", "./downloads")
+	os.Setenv("AWS_DEFAULT_REGION", "us-east-1")
+	os.Setenv("AWS_DEFAULT_BUCKET", "default_bucket")
 
 	srv := &http.Server{
 		Handler:      router,

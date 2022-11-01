@@ -30,6 +30,6 @@ RUN apk del automake build-base
 # RUN apt-get update -qq && apt-get install -y libvips42 && go build -o /image_processing
 RUN go build -o /image_processing
 
-EXPOSE 8080
+EXPOSE 4000
 
 CMD [ "/image_processing" ]

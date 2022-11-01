@@ -1,0 +1,29 @@
+version: '3.6'
+services:
+  # Dynamo DB
+  dynamo_db:
+    image:  amazon/dynamodb-local
+    container_name: my-dynamodb
+    hostname: dynamodb
+    restart: always
+    volumes:
+      -  ./my-dynamodb-data:/home/dynamodblocal/data
+    ports:
+      - 8000:8000
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal/data/"
+  
+  # AWS S3
+  localstack:
+    image: localstack/localstack
+    container_name: localstack_service
+    ports:
+      - "4567-4584:4567-4584"
+      - "8055:8055"
+    environment:
+      - SERVICES=s3
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+    volumes:
+      - ./tmp/localstack:/tmp/localstack   
+      - /var/run/docker.sock:/var/run/docker.sock
+
