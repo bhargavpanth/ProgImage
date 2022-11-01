@@ -17,7 +17,7 @@ const gateway = {
         const model = {
             fileSHA: fileSHA,
             path: '',
-            fileName: '',
+            fileName: 'abc.jpg',
             mimeType: model_1.MimeType.jpeg,
             verified: false,
             id: '',

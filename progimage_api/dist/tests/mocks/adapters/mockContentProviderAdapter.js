@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getMockContentProviderAdapter = void 0;
 const utils_1 = require("../utils");
 const defaultMock = {
-    generatePreSignedURLForUpload: async (fileName) => {
+    generatePreSignedURLForUpload: async (fileName, fileSHA) => {
         return Promise.resolve('http://pre-signed-url/upload');
     },
     generatePreSignedURLForDownload: async (fileName) => {

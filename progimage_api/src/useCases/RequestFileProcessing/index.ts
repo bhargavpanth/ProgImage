@@ -28,7 +28,7 @@ const factory = (dependencies: Dependencies) => async (fileSHA: string, processO
         throw new Error("Unable to process image")
     })
 
-    return contentProviderAdapter.generatePreSignedURLForDownload(fileName)
+    return contentProviderAdapter.generatePreSignedURLForDownload(fileName, fileSHA)
 }
 
 export default factory

@@ -8,6 +8,6 @@ const factory = (dependencies) => async (fileSHA, processOptions, formatOption) 
     const fileName = await imageProcessorAdapter.processImage(fileSHA, processOptions, formatOption).catch(err => {
         throw new Error("Unable to process image");
     });
-    return contentProviderAdapter.generatePreSignedURLForDownload(fileName);
+    return contentProviderAdapter.generatePreSignedURLForDownload(fileName, fileSHA);
 };
 exports.default = factory;

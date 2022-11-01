@@ -2,7 +2,7 @@ import { ContentProviderAdapter } from '../../../adapters/interfaces/contentProv
 import { makeMockDependencyFactory } from '../utils'
 
 const defaultMock: ContentProviderAdapter = {
-    generatePreSignedURLForUpload: async (fileName: string): Promise<string> => {
+    generatePreSignedURLForUpload: async (fileName: string, fileSHA: string): Promise<string> => {
         return Promise.resolve('http://pre-signed-url/upload')
     },
     generatePreSignedURLForDownload: async (fileName: string): Promise<string> => {

@@ -34,7 +34,9 @@ describe('File upload', () => {
             const mockDependencies = {
                 progImageGateway: (0, mockProgImageGateway_1.getMockProgImageGateway)({
                     getEntry: async (fileSHA) => {
-                        return new mockProgImageGateway_1.MockPersistantProgImage();
+                        return new mockProgImageGateway_1.MockPersistantProgImage({
+                            verified: true
+                        });
                     },
                 }),
                 contentProviderAdapter: (0, mockContentProviderAdapter_1.getMockContentProviderAdapter)()
@@ -44,6 +46,27 @@ describe('File upload', () => {
         });
         it('throws an error', () => {
             (0, expect_js_1.default)(error.message).to.equal('Trying to re-upload an existing file');
+        });
+    });
+    describe('Requesting to upload an already uploaded file that is not yet verified', () => {
+        let response;
+        const mockFileSHA = 'mockFileSHA', mockFilename = 'mockFileName';
+        before(async () => {
+            const mockDependencies = {
+                progImageGateway: (0, mockProgImageGateway_1.getMockProgImageGateway)({
+                    getEntry: async (fileSHA) => {
+                        return new mockProgImageGateway_1.MockPersistantProgImage({
+                            verified: false
+                        });
+                    },
+                }),
+                contentProviderAdapter: (0, mockContentProviderAdapter_1.getMockContentProviderAdapter)()
+            };
+            const useCase = (0, RequestFileUpload_1.default)(mockDependencies);
+            response = await useCase(mockFileSHA, mockFilename);
+        });
+        it('creates a presigned URL to upload', () => {
+            (0, expect_js_1.default)(response).to.equal('http://pre-signed-url/upload');
         });
     });
 });

@@ -1,4 +1,4 @@
 export interface ContentProviderAdapter {
-    generatePreSignedURLForUpload(fileName: string): Promise<string>
-    generatePreSignedURLForDownload(fileName: string): Promise<string>
+    generatePreSignedURLForUpload(fileName: string, fileSHA: string): Promise<string>
+    generatePreSignedURLForDownload(fileName: string, fileSHA: string): Promise<string>
 }

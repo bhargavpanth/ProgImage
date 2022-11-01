@@ -4,7 +4,7 @@ exports.contentProviderAdapter = void 0;
 const client_s3_1 = require("@aws-sdk/client-s3");
 const s3_request_presigner_1 = require("@aws-sdk/s3-request-presigner");
 exports.contentProviderAdapter = {
-    generatePreSignedURLForUpload: async (fileName) => {
+    generatePreSignedURLForUpload: async (fileName, fileSHA) => {
         const config = {
             credentials: {
                 accessKeyId: process.env.ACCESS_KEY_ID,
@@ -15,11 +15,11 @@ exports.contentProviderAdapter = {
         const client = new client_s3_1.S3Client(config);
         const command = new client_s3_1.PutObjectCommand({
             Bucket: process.env.BUCKET,
-            Key: fileName
+            Key: `${fileSHA}${fileName}`
         });
         return (0, s3_request_presigner_1.getSignedUrl)(client, command, { expiresIn: 3500 });
     },
-    generatePreSignedURLForDownload: async (fileName) => {
+    generatePreSignedURLForDownload: async (fileName, fileSHA) => {
         const config = {
             credentials: {
                 accessKeyId: process.env.ACCESS_KEY_ID,
@@ -30,7 +30,7 @@ exports.contentProviderAdapter = {
         const client = new client_s3_1.S3Client(config);
         const command = new client_s3_1.GetObjectCommand({
             Bucket: process.env.BUCKET,
-            Key: fileName
+            Key: `${fileSHA}${fileName}`
         });
         return (0, s3_request_presigner_1.getSignedUrl)(client, command, { expiresIn: 3500 });
     }

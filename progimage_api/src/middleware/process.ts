@@ -22,7 +22,5 @@ export function process(req, res, next) {
         .then(preSignedURL => 
             res.send({ url: preSignedURL })
         )
-        .catch(err => 
-            res.send({ message: `Something went wrong. ${err}` })
-        )
+        .catch(err => res.sendStatus(500))
 }

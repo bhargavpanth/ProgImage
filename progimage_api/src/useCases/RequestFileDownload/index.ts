@@ -19,7 +19,7 @@ const factory = (dependencies: Dependencies) => async (fileSHA) => {
     
     const fileName = existingFileEntry.model.fileName
 
-    return contentProviderAdapter.generatePreSignedURLForDownload(fileName)
+    return contentProviderAdapter.generatePreSignedURLForDownload(fileName, fileSHA)
 }
 
 export default factory

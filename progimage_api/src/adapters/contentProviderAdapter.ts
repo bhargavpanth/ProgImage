@@ -3,7 +3,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { ContentProviderAdapter } from './interfaces/contentProviderAdapter'
 
 export const contentProviderAdapter: ContentProviderAdapter = {
-    generatePreSignedURLForUpload: async (fileName: string) => {
+    generatePreSignedURLForUpload: async (fileName: string, fileSHA: string) => {
         const config = {
             credentials: {
                 accessKeyId: process.env.ACCESS_KEY_ID,
@@ -14,11 +14,11 @@ export const contentProviderAdapter: ContentProviderAdapter = {
         const client = new S3Client(config)
         const command = new PutObjectCommand({
             Bucket: process.env.BUCKET,
-            Key: fileName
+            Key: `${fileSHA}${fileName}`
         })
         return getSignedUrl(client, command, { expiresIn: 3500 })
     },
-    generatePreSignedURLForDownload: async (fileName: string) => {
+    generatePreSignedURLForDownload: async (fileName: string, fileSHA: string) => {
         const config = {
             credentials: {
                 accessKeyId: process.env.ACCESS_KEY_ID,
@@ -29,7 +29,7 @@ export const contentProviderAdapter: ContentProviderAdapter = {
         const client = new S3Client(config)
         const command = new GetObjectCommand({
             Bucket: process.env.BUCKET,
-            Key: fileName
+            Key: `${fileSHA}${fileName}`
         })
         return getSignedUrl(client, command, { expiresIn: 3500 })
     }

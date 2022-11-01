@@ -21,7 +21,7 @@ const gateway: ProgImageGateway = {
         const model: ProgImageModel = {
             fileSHA: fileSHA,
             path: '',
-            fileName: '',
+            fileName: 'abc.jpg',
             mimeType: MimeType.jpeg,
             verified: false,
             id: '',

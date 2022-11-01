@@ -6,6 +6,6 @@ const factory = (dependencies) => async (fileSHA) => {
     if (!existingFileEntry)
         throw new Error('Trying to download a file that doesnt exist');
     const fileName = existingFileEntry.model.fileName;
-    return contentProviderAdapter.generatePreSignedURLForDownload(fileName);
+    return contentProviderAdapter.generatePreSignedURLForDownload(fileName, fileSHA);
 };
 exports.default = factory;

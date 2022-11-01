@@ -22,7 +22,7 @@ function process(req, res, next) {
         imageProcessingAdapter: imageProcessingAdapter_1.imageProcessingAdapter
     });
     return useCase.requestFileProcessing(fileSHA, processOptions, formatOptions)
-        .then(preSignedURL => res.sendStatus(200).send({ url: preSignedURL }))
-        .catch(err => res.sendStatus(500).send({ message: `Something went wrong. ${err}` }));
+        .then(preSignedURL => res.send({ url: preSignedURL }))
+        .catch(err => res.sendStatus(500));
 }
 exports.process = process;
