@@ -15,9 +15,17 @@ const factory = (dependencies: Dependencies) => async (fileSHA: string, processO
         contentProviderAdapter,
         imageProcessorAdapter
     } = dependencies
+
+    console.log({
+        fileSHA,
+        processOptions,
+        formatOption
+    })
     
     const existingFileEntry = await progImageGateway.getEntry(fileSHA)
-    if (!existingFileEntry || !existingFileEntry.getVerificationStatus()) 
+    // if (!existingFileEntry || !existingFileEntry.getVerificationStatus())
+
+    if (!existingFileEntry)
         throw new Error('Trying to process a file that doesnt exist. Upload file to repository before you can request for processing')
 
     const fileName = await imageProcessorAdapter.processImage(

@@ -1,6 +1,6 @@
 import { progImageGateway } from '../entityGateway'
 import { contentProviderAdapter } from '../adapters/contentProviderAdapter'
-import { imageProcessingAdapter } from '../adapters/imageProcessingAdapter'
+import { imageProcessingAdapter as imageProcessorAdapter } from '../adapters/imageProcessingAdapter'
 import useCases from '../useCases'
 
 export function process(req, res, next) {
@@ -15,12 +15,12 @@ export function process(req, res, next) {
     const useCase = useCases({
         progImageGateway,
         contentProviderAdapter,
-        imageProcessingAdapter
+        imageProcessorAdapter
     })
 
     return useCase.requestFileProcessing(fileSHA, processOptions, formatOptions)
         .then(preSignedURL => 
             res.send({ url: preSignedURL })
         )
-        .catch(err => res.sendStatus(500))
+        .catch(err => res.sendStatus(400))
 }

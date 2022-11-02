@@ -8,6 +8,10 @@ func FileTransform(dependencies Dependencies) func(string, []string, []string) (
 	return func(imageId string, transformOptions []string, formatConversionOptions []string) (string, error) {
 		fileProcessorAdapter := dependencies.FileProcessor.NewFileProcessor(imageId)
 
+		println("------------IMAGE_PROCESSING_MS-----------------")
+		println(imageId, transformOptions, formatConversionOptions)
+		println("------------IMAGE_PROCESSING_MS-----------------")
+
 		// Download file from remote
 		downloadedFileName, err := fileProcessorAdapter.DownloadFile()
 		if err != nil {

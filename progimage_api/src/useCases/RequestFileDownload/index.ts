@@ -14,6 +14,7 @@ const factory = (dependencies: Dependencies) => async (fileSHA) => {
     } = dependencies
     
     const existingFileEntry = await progImageGateway.getEntry(fileSHA)
+
     if (!existingFileEntry) 
         throw new Error('Trying to download a file that doesnt exist')
     

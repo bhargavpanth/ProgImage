@@ -19,10 +19,10 @@ function process(req, res, next) {
     const useCase = (0, useCases_1.default)({
         progImageGateway: entityGateway_1.progImageGateway,
         contentProviderAdapter: contentProviderAdapter_1.contentProviderAdapter,
-        imageProcessingAdapter: imageProcessingAdapter_1.imageProcessingAdapter
+        imageProcessorAdapter: imageProcessingAdapter_1.imageProcessingAdapter
     });
     return useCase.requestFileProcessing(fileSHA, processOptions, formatOptions)
         .then(preSignedURL => res.send({ url: preSignedURL }))
-        .catch(err => res.sendStatus(500));
+        .catch(err => res.sendStatus(400));
 }
 exports.process = process;

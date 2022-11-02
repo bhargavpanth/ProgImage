@@ -11,7 +11,8 @@ class PersistantProgImage extends progImage_1.ProgImage {
 const TABLE_NAME = 'ProgImage';
 const gateway = {
     createEntry: async (model) => {
-        return Promise.resolve(new PersistantProgImage(model));
+        await (0, dynamoDBClient_1.DynamoDBClient)(TABLE_NAME).create(model);
+        return new PersistantProgImage(model);
     },
     getEntry: async (fileSHA) => {
         const res = await (0, dynamoDBClient_1.DynamoDBClient)(TABLE_NAME).read(fileSHA);
