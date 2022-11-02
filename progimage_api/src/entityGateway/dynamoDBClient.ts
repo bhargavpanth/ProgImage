@@ -2,7 +2,9 @@ import AWS from 'aws-sdk'
 
 AWS.config.update({ region: process.env.AWS_DEFAULT_REGION })
 
-const DynamoDB = new AWS.DynamoDB.DocumentClient()
+const dynamoEndpoint = `${process.env.DB_IP}:${process.env.DB_PORT}`
+
+const DynamoDB = new AWS.DynamoDB.DocumentClient({ endpoint: new AWS.Endpoint(dynamoEndpoint) })
 
 export const DynamoDBClient = (tableName: string) => {
     return ({

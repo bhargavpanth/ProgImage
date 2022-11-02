@@ -17,7 +17,7 @@ services:
     image: localstack/localstack
     container_name: localstack_service
     ports:
-      - "4567-4584:4567-4584"
+      - "4566-4584:4566-4584"
       - "8055:8055"
     environment:
       - SERVICES=s3

@@ -12,9 +12,11 @@ COPY * ./
 ENV AWS_ACCESS_KEY_ID = 'test'\ 
     AWS_SECRET_ACCESS_KEY = 'test' \
     AWS_DEFAULT_REGION = 'us-east-1' \
-    AWS_DEFAULT_BUCKET = 'AWS_DEFAULT_BUCKET' \
+    AWS_DEFAULT_BUCKET = 'prog-image' \
     IP = 0.0.0.0 \
-    PORT = 4000
+    PORT = 8080 \
+    DB_IP = 0.0.0.0 \
+    DB_PORT = 8000
 
 RUN yarn global add ts-node nodemon
 RUN yarn install
