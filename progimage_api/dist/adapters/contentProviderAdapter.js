@@ -7,10 +7,10 @@ exports.contentProviderAdapter = {
     generatePreSignedURLForUpload: async (fileName, fileSHA) => {
         const config = {
             credentials: {
-                accessKeyId: process.env.ACCESS_KEY_ID,
-                secretAccessKey: process.env.SECRET_ACCESS_KEY
+                accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+                secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
             },
-            region: process.env.REGION,
+            region: process.env.AWS_DEFAULT_REGION,
         };
         const client = new client_s3_1.S3Client(config);
         const command = new client_s3_1.PutObjectCommand({
@@ -22,10 +22,10 @@ exports.contentProviderAdapter = {
     generatePreSignedURLForDownload: async (fileName, fileSHA) => {
         const config = {
             credentials: {
-                accessKeyId: process.env.ACCESS_KEY_ID,
-                secretAccessKey: process.env.SECRET_ACCESS_KEY
+                accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+                secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
             },
-            region: process.env.REGION,
+            region: process.env.AWS_DEFAULT_REGION,
         };
         const client = new client_s3_1.S3Client(config);
         const command = new client_s3_1.GetObjectCommand({

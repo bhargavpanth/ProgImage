@@ -1,0 +1,18 @@
+{
+    "TableName": "ProgImage",
+    "KeySchema": [
+      { "AttributeName": "fileSHA", "KeyType": "HASH" },
+      { "AttributeName": "fileName", "KeyType": "RANGE" }
+    ],
+    "AttributeDefinitions": [
+      { "AttributeName": "path", "AttributeType": "S" },
+      { "AttributeName": "mimeType", "AttributeType": "S" },
+      { "AttributeName": "verified", "AttributeType": "B" },
+      { "AttributeName": "id", "AttributeType": "S" },
+      { "AttributeName": "createdAt", "AttributeType": "S" }
+    ],
+    "ProvisionedThroughput": {
+      "ReadCapacityUnits": 5,
+      "WriteCapacityUnits": 5
+    }
+}
