@@ -3,14 +3,16 @@ services:
   # Dynamo DB
   dynamo_db:
     image:  amazon/dynamodb-local
-    container_name: my-dynamodb
+    container_name: dynamodb
     hostname: dynamodb
     restart: always
+    user: root
     volumes:
-      -  ./my-dynamodb-data:/home/dynamodblocal/data
+      -  ./dynamodb-data:/home/dynamodblocal/data
     ports:
       - "8000:8000"
     command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal/data/"
+    working_dir: /home/dynamodblocal
   
   # AWS S3
   localstack:

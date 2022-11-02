@@ -18,7 +18,7 @@ export const DynamoDBClient = (tableName: string) => {
             return DynamoDB.get({
                 TableName: tableName,
                 Key: {
-                    primaryKey: primaryKey
+                    fileSHA: primaryKey
                 }
             }).promise()
         }

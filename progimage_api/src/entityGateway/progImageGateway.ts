@@ -1,6 +1,7 @@
+import { randomUUID } from 'crypto'
 import { ProgImage } from '../entity/progImage'
-import { MimeType, ProgImageModel } from '../entity/progImage/model'
-// import { DynamoDBClient } from './dynamoDBClient'
+import { ProgImageModel } from '../entity/progImage/model'
+import { DynamoDBClient } from './dynamoDBClient'
 import ProgImageGateway from './interfaces/progImageGateway'
 
 class PersistantProgImage extends ProgImage {
@@ -9,41 +10,42 @@ class PersistantProgImage extends ProgImage {
     }
 }
 
-// const TABLE_NAME = 'ProgImage'
+const TABLE_NAME = 'ProgImage'
 
 const gateway: ProgImageGateway = {
     createEntry: async (model: ProgImageModel): Promise<ProgImage> => {
-        // const res = await DynamoDBClient(TABLE_NAME).create(model)
-        // console.log(res)
-        return Promise.resolve(new PersistantProgImage(model))
+        await DynamoDBClient(TABLE_NAME).create(model)
+        return new PersistantProgImage(model)
     },
 
-    getEntry: async (fileSHA: string): Promise<ProgImage> => {
-        const model: ProgImageModel = {
-            fileSHA: fileSHA,
-            path: '',
-            fileName: 'abc.jpg',
-            mimeType: MimeType.jpeg,
-            verified: false,
-            id: '',
-            createdAt: new Date()
+    getEntry: async (fileSHA: string): Promise<ProgImage | void> => {
+        const res = await DynamoDBClient(TABLE_NAME).read(fileSHA)
+        if (res && res.Item) {
+            const progImageModel = {
+                fileSHA: res.Item.fileSHA,
+                path: res.Item.path,
+                fileName: res.Item.fileName,
+                mimeType: res.Item.mimeType,
+                verified: res.Item.verified,
+                id: res.Item.id,
+                createdAt: res.Item.createdAt
+            }
+            return new PersistantProgImage(progImageModel)
         }
-        // const res = await DynamoDBClient(TABLE_NAME).read(fileSHA)
-        // console.log({res})
-        return Promise.resolve(new PersistantProgImage(model))
     },
     
-    createNewFile: async (fileSHA: string, fileName: string): Promise<ProgImage> => {
+    createNewFile: async (fileSHA: string, fileName: string): Promise<ProgImage | void> => {
         const model: ProgImageModel = {
             fileSHA: fileSHA,
-            path: '',
             fileName: fileName,
-            mimeType: MimeType.jpeg,
             verified: false,
-            id: '',
+            id: randomUUID(),
             createdAt: new Date()
         }
-        return Promise.resolve(new PersistantProgImage(model))
+
+        await DynamoDBClient(TABLE_NAME).create(model)
+        
+        return new PersistantProgImage(model)
     }
 }
 

@@ -7,7 +7,6 @@ exports.DynamoDBClient = void 0;
 const aws_sdk_1 = __importDefault(require("aws-sdk"));
 aws_sdk_1.default.config.update({ region: process.env.AWS_DEFAULT_REGION });
 const dynamoEndpoint = `${process.env.DB_IP}:${process.env.DB_PORT}`;
-console.log(dynamoEndpoint);
 const DynamoDB = new aws_sdk_1.default.DynamoDB.DocumentClient({ endpoint: new aws_sdk_1.default.Endpoint(dynamoEndpoint) });
 const DynamoDBClient = (tableName) => {
     return ({
@@ -21,7 +20,7 @@ const DynamoDBClient = (tableName) => {
             return DynamoDB.get({
                 TableName: tableName,
                 Key: {
-                    primaryKey: primaryKey
+                    fileSHA: primaryKey
                 }
             }).promise();
         }

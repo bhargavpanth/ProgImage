@@ -2,9 +2,9 @@ import { BaseDomainModel } from '../domainEntity'
 
 export interface ProgImageModel extends BaseDomainModel {
 	fileSHA: string
-    path: string
+    path?: string
     fileName: string
-    mimeType: MimeType
+    mimeType?: MimeType
     verified: boolean
 }
 
