@@ -10,6 +10,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(bodyParser.json())
 
+app.use('/', (req, res) => {
+	res.sendStatus(200)
+})
+
 app.use('/api', api)
 
 app.listen(port, () => {

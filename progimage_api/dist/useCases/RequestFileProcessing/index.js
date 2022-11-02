@@ -2,11 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const factory = (dependencies) => async (fileSHA, processOptions, formatOption) => {
     const { progImageGateway, contentProviderAdapter, imageProcessorAdapter } = dependencies;
-    console.log({
-        fileSHA,
-        processOptions,
-        formatOption
-    });
     const existingFileEntry = await progImageGateway.getEntry(fileSHA);
     // if (!existingFileEntry || !existingFileEntry.getVerificationStatus())
     if (!existingFileEntry)

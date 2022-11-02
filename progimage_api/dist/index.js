@@ -10,6 +10,9 @@ const port = parseInt(process.env.PORT) || 8080;
 const app = (0, express_1.default)();
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.use(body_parser_1.default.json());
+app.use('/', (req, res) => {
+    res.sendStatus(200);
+});
 app.use('/api', routes_1.default);
 app.listen(port, () => {
     // @ts-ignore

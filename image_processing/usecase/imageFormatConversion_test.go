@@ -43,7 +43,7 @@ func TestConvertImageFormatToJPEG(t *testing.T) {
 		ImageProcessor: adapters.ImageProcessingAdapter{},
 	}
 
-	img := "test.png"
+	img := "img.png"
 
 	path, err := ConvertImageFormat(dependencies)(img, "JPEG")
 	if err != nil {
@@ -69,7 +69,7 @@ func TestConvertImageFormatToAnUnsuportedFileFormat(t *testing.T) {
 		ImageProcessor: adapters.ImageProcessingAdapter{},
 	}
 
-	img := "test.png"
+	img := "img.png"
 
 	_, err := ConvertImageFormat(dependencies)(img, "WEBP")
 	if err == nil {
