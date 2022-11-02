@@ -1,7 +1,10 @@
 package adapters
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"errors"
+	"io"
 	"os"
 	"path"
 
@@ -48,6 +51,7 @@ func (fileProcessorAdapter *FileProcessorAdapter) DownloadFile() (string, error)
 			Bucket: aws.String(bucket),
 			Key:    aws.String(fileProcessorAdapter.fileId),
 		})
+
 	println(err.Error())
 
 	if err != nil {
@@ -69,6 +73,13 @@ func (fileProcessorAdapter *FileProcessorAdapter) UploadFile() (string, error) {
 		return "", errors.New("unable to open file image")
 	}
 
+	hash, err := calculateFileHash(fileProcessorAdapter.fileId)
+	if err != nil {
+		return "", errors.New("unable to genenrate key for upload")
+	}
+
+	key := hash + fileProcessorAdapter.fileId
+
 	defer file.Close()
 
 	sess, _ := session.NewSession(&aws.Config{
@@ -80,14 +91,14 @@ func (fileProcessorAdapter *FileProcessorAdapter) UploadFile() (string, error) {
 
 	_, err = uploader.Upload(&s3manager.UploadInput{
 		Bucket: aws.String(bucket),
-		Key:    aws.String(fileProcessorAdapter.fileId),
+		Key:    aws.String(key),
 	})
 
 	if err != nil {
 		return "", errors.New("unable to upload image")
 	}
 
-	return fileProcessorAdapter.fileId, nil
+	return key, nil
 }
 
 func (fileProcessorAdapter *FileProcessorAdapter) PurgeDownloadedFile(downloadPath string) bool {
@@ -95,4 +106,19 @@ func (fileProcessorAdapter *FileProcessorAdapter) PurgeDownloadedFile(downloadPa
 	readPath := path.Join(realtivePath, fileProcessorAdapter.fileId)
 	err := os.Remove(readPath)
 	return err == nil
+}
+
+func calculateFileHash(fileName string) (string, error) {
+	realtivePath := os.Getenv("DOWNLOADS")
+	readPath := path.Join(realtivePath, fileName)
+	filePath, err := os.Open(readPath)
+	if err != nil {
+		return "", errors.New("unable to read file")
+	}
+	defer filePath.Close()
+	hasher := sha256.New()
+	if _, err := io.Copy(hasher, filePath); err != nil {
+		return "", errors.New("unable to hash file contents")
+	}
+	return hex.EncodeToString(hasher.Sum(nil)), nil
 }
